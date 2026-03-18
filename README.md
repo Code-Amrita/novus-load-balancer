@@ -48,7 +48,7 @@ Works similar to servers of NGINX.
 ## Usage 
 1. Create the config file at `config/config.yaml`
 
-If you are using the template file, copy `config/config.example` to `config/config.yaml` and then edit values.
+If you are using the template file, copy `config/config.yaml.example` to `config/config.yaml` and then edit values.
 
 Use this structure (must match the keys exactly):
 ```
@@ -78,9 +78,31 @@ go run cmd/main.go
 ```
 4. Send request
 
+Example request:
+```
+curl http://localhost:8080/
+```
+
+Another example with path and query params:
+```
+curl "http://localhost:8080/index.html?source=test"
+```
+
 - First request → forwarded to backend.
 - Repeated request → served from cache (logs ✅ Cache hit).
 - If backend goes down → logged as ❌ DOWN, skipped in routing.
+
+## Cache Efficiency Benchmark
+Run benchmark tests for the LRU cache:
+
+```
+go test -bench="." -benchmem ./internal/cache
+```
+
+This includes:
+- `BenchmarkLRUCachePut` for write path performance
+- `BenchmarkLRUCacheGetHit` for cache-hit read performance
+- `BenchmarkLRUCacheGetMiss` for cache-miss read performance
 
 See examples in Documentation.md
 
