@@ -1,0 +1,19 @@
+# Novus Load Balancer configuration template
+# This file is an example only.
+# Copy this to config/config.yaml before running the app.
+
+server:
+  port: 8080
+
+proxy:
+  targets:
+    - "http://localhost:5000"
+    - "http://localhost:5001"
+
+loadbalancer:
+  # Options: round_robin, least_connections
+  strategy: "round_robin"
+
+cache:
+  # Max number of cached responses
+  max_size: 100
