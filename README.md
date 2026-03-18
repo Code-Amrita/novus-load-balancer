@@ -46,7 +46,11 @@ Works similar to servers of NGINX.
 ![Diagram](assets/Architecture.png)
 
 ## Usage 
-1. Configure YAML for Proxy
+1. Create the config file at `config/config.yaml`
+
+If you are using the template file, copy `config/config.example` to `config/config.yaml` and then edit values.
+
+Use this structure (must match the keys exactly):
 ```
 server:
   port: 8080   # Proxy listening port
@@ -56,12 +60,11 @@ proxy:
     - "http://localhost:5000"
     - "http://localhost:5001"
 
-loadBalancer:
+loadbalancer:
   strategy: "round_robin"   # Options: round_robin, least_connections
 
 cache:
-  enabled: true
-  size: 100   # Number of entries in LRU cache
+  max_size: 100   # Number of entries in LRU cache
 
 ```
 2. Start backend servers (example using Python HTTP server)
